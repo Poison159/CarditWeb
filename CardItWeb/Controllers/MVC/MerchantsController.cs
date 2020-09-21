@@ -12,6 +12,7 @@ using CardItWebApp.Models;
 
 namespace CardItWebApp.Controllers.MVC
 {
+    [Authorize(Roles="Admin")]
     public class MerchantsController : Controller
     {
         private CardItDbContext db = new CardItDbContext();
