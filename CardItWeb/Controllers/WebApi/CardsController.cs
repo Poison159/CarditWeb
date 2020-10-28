@@ -126,9 +126,9 @@ namespace CardItWebApp.Controllers.WebApi
                 dbContext.SaveChanges();
                 return merchant;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new {Errors="could not remove card" };
+                return new {Errors=ex.Message };
             } 
             
         }

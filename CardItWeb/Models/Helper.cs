@@ -23,6 +23,12 @@ namespace CardItWeb.Models
             db.SaveChanges();
             return token;
         }
+
+        public static string fixUrl(string url) {
+            var hostUrl = "https://www.cardit.co.za/Content/imgs/";
+            var lastWord = url.Split('/').Last();
+            return hostUrl + lastWord;
+        }
         public static Token createToken(string email)
         {
             var tokenString = Guid.NewGuid().ToString();
@@ -73,7 +79,10 @@ namespace CardItWeb.Models
 
         internal static void deleteOldBarcode(string cardNUmber)
         {
-            var path = AppDomain.CurrentDomain.BaseDirectory + @"Content\imgs\" + cardNUmber + ".jpg";
+            //var path = AppDomain.CurrentDomain.BaseDirectory + @"";
+            var targetPath = System.Web.Hosting.HostingEnvironment.MapPath("~/Content/imgs/");
+            var photoName = cardNUmber + ".jpg";
+            var path = Path.Combine(targetPath, photoName);
             File.Delete(path);
         }
 

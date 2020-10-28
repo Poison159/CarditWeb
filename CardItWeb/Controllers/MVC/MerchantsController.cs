@@ -20,7 +20,14 @@ namespace CardItWebApp.Controllers.MVC
         // GET: Merchants
         public ActionResult Index()
         {
-            return View(db.Merchants.ToList());
+            var merchants = db.Merchants.ToList();
+            var cards = db.Cards.ToList();
+            foreach (var item in merchants)
+            {
+                item.ImagePath = Helper.fixUrl(item.ImagePath);
+            }
+            db.SaveChanges();
+            return View(merchants);
         }
 
         // GET: Merchants/Details/5
@@ -61,7 +68,7 @@ namespace CardItWebApp.Controllers.MVC
                 catch (Exception){
                     return View(merchant);
                 }
-                merchant.ImagePath = "https://carditweb.conveyor.cloud/Content/imgs/" + merchant.Name + ".png";
+                merchant.ImagePath = "https://cardit.co.za/Content/imgs/" + merchant.Name + ".png";
                 db.Merchants.Add(merchant);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -104,7 +111,7 @@ namespace CardItWebApp.Controllers.MVC
                 {
                     return View(merchant);
                 }
-                merchant.ImagePath = "https://carditweb.conveyor.cloud/Content/imgs/" + merchant.Name.Replace(" ",String.Empty) + ".png";
+                merchant.ImagePath = "https://cardit.co.za/Content/imgs/" + merchant.Name.Replace(" ",String.Empty) + ".png";
                 db.Entry(merchant).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
